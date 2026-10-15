@@ -14,22 +14,22 @@ env:
 service:
   enabled: false
 
-service:
-  type: NodePort
-  port: 8080
-  targetPort: 8080
-  nodePort: 30082
-  extraPorts:
-    - name: torrent-tcp
-      port: 6881
-      targetPort: 6881
-      nodePort: 30881
-      protocol: TCP
-    - name: torrent-udp
-      port: 6881
-      targetPort: 6881
-      nodePort: 30881
-      protocol: UDP
+# service:
+#   type: NodePort
+#   port: 8080
+#   targetPort: 8080
+#   nodePort: 30082
+#   extraPorts:
+#     - name: torrent-tcp
+#       port: 6881
+#       targetPort: 6881
+#       nodePort: 30881
+#       protocol: TCP
+#     - name: torrent-udp
+#       port: 6881
+#       targetPort: 6881
+#       nodePort: 30881
+#       protocol: UDP
 
 persistence:
   config:
