@@ -6,18 +6,14 @@ metadata:
 spec:
   project: default
 
-  sources:
-    - repoURL: https://jellyfin.github.io/jellyfin-helm
-      chart: jellyfin
-      targetRevision: "3.2.0"
-      helm:
-        releaseName: jellyfin
-        valueFiles:
-          - $values/argocd/configs/jellyfin/values.yaml
-
-    - repoURL: https://SEU-REPOSITORIO-GIT.git
-      targetRevision: main
-      ref: values
+  source:
+    repoURL: https://jellyfin.github.io/jellyfin-helm
+    chart: jellyfin
+    targetRevision: "3.2.0"
+    helm:
+      releaseName: jellyfin
+      valueFiles:
+        - $values/argocd/configs/jellyfin/values.yaml
 
   destination:
     server: https://kubernetes.default.svc
