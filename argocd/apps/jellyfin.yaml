@@ -7,13 +7,13 @@ spec:
   project: default
 
   source:
-    repoURL: https://jellyfin.github.io/jellyfin-helm
     chart: jellyfin
-    targetRevision: "3.2.0"
+    repoURL: https://jellyfin.github.io/jellyfin-helm
+    targetRevision: "3.0.0"
     helm:
       releaseName: jellyfin
       valueFiles:
-        - $values/argocd/configs/jellyfin/values.yaml
+        - argocd/configs/jellyfin/values.yaml
 
   destination:
     server: https://kubernetes.default.svc
