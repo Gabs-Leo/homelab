@@ -30,14 +30,17 @@ service:
 persistence:
   config:
     enabled: true
-    type: hostPath
-    hostPath: /srv/homelab/config/qbittorrent
-    readOnly: false
+    existingClaim: "qbittorrent-config-pvc"
+    accessMode: ReadWriteOnce
+    # type: hostPath
+    # hostPath: /srv/homelab/config/qbittorrent
+    # readOnly: false
 
-media:
-  enabled: true
-  mountPath: /srv/homelab/data/media
-  readOnly: false
+  media:
+    enabled: true
+    existingClaim: "media-pvc"
+    accessMode: ReadWriteOnce
+    readOnly: false
 
 ingress:
   enabled: false

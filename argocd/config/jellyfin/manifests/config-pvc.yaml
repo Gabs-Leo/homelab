@@ -10,4 +10,4 @@ spec:
   volumeName: jellyfin-config-pv
   resources:
     requests:
-      storage: 2Gi
+      storage: 5Gi
