@@ -1,0 +1,11 @@
+service:
+  enabled: true
+  type: NodePort
+  port: 7575
+  nodePort: 30075
+
+persistence:
+  homarrDatabase:
+    enabled: true
+    storageClassName: "default"
+    size: "1Gi"
