@@ -13,11 +13,12 @@ spec:
       helm:
         releaseName: jellyfin
         valueFiles:
-          - $values/argocd/configs/jellyfin/values.yaml
+          - $values/argocd/config/jellyfin/values.yaml
 
     - repoURL: https://github.com/Gabs-Leo/homelab.git
       targetRevision: HEAD
       ref: values
+      path: argocd/config/jellyfin/manifests
 
   destination:
     server: https://kubernetes.default.svc
