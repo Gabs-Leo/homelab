@@ -17,6 +17,10 @@ spec:
 
     - repoURL: https://github.com/Gabs-Leo/homelab.git
       targetRevision: HEAD
+      path: argocd/config/jellyfin/manifests
+
+    - repoURL: https://github.com/Gabs-Leo/homelab.git
+      targetRevision: HEAD
       ref: values
 
   destination:
