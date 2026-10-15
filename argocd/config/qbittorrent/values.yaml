@@ -14,7 +14,7 @@ env:
 service:
   type: NodePort
   port: 8080
-  nodePort: 30080
+  nodePort: 30082
   extraPorts:
     - name: torrent-tcp
       port: 6881

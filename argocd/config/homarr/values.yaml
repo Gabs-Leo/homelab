@@ -7,5 +7,5 @@ service:
 persistence:
   homarrDatabase:
     enabled: true
-    storageClassName: "default"
-    size: "1Gi"
+    volumeClaimName: "homarr-config-pvc"
+    accessMode: ReadWriteOnce

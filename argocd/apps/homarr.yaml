@@ -14,6 +14,10 @@ spec:
         releaseName: homarr
         valueFiles:
           - $values/argocd/config/homarr/values.yaml
+    
+    - repoURL: https://github.com/Gabs-Leo/homelab.git
+      targetRevision: HEAD
+      path: argocd/config/homarr/manifests
 
     - repoURL: https://github.com/Gabs-Leo/homelab.git
       targetRevision: HEAD
