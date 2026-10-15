@@ -16,6 +16,11 @@ service:
   port: 8080
   nodePort: 30082
   extraPorts:
+    - name: webui
+      port: 8081
+      targetPort: 8080
+      nodePort: 30882
+      protocol: TCP
     - name: torrent-tcp
       port: 6881
       targetPort: 6881
