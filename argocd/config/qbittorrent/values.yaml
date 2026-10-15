@@ -1,0 +1,43 @@
+
+image:
+  repository: lscr.io/linuxserver/qbittorrent
+  tag: "5.2.0"
+  pullPolicy: IfNotPresent
+
+env:
+  PUID: "1000"
+  PGID: "1000"
+  TZ: "Etc/UTC"
+  WEBUI_PORT: "8080"
+  TORRENTING_PORT: "6881"
+
+service:
+  type: NodePort
+  port: 8080
+  nodePort: 30080
+  extraPorts:
+    - name: torrent-tcp
+      port: 6881
+      targetPort: 6881
+      nodePort: 30881
+      protocol: TCP
+    - name: torrent-udp
+      port: 6881
+      targetPort: 6881
+      nodePort: 30881
+      protocol: UDP
+
+persistence:
+  config:
+    enabled: true
+    type: hostPath
+    hostPath: /srv/homelab/config/qbittorrent
+    readOnly: false
+
+media:
+  enabled: true
+  mountPath: /srv/homelab/data/media
+  readOnly: false
+
+ingress:
+  enabled: false

@@ -1,0 +1,28 @@
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: qbittorrent
+  namespace: argocd
+spec:
+  project: default
+  sources:
+    - repoURL: https://harish2k01.github.io/helm-charts
+      chart: qbittorrent
+      targetRevision: "0.1.2"
+      helm:
+        releaseName: qbittorrent
+        valueFiles:
+          - $values/argocd/config/qbittorrent/values.yaml
+    - repoURL: https://github.com/Gabs-Leo/homelab.git
+      targetRevision: HEAD
+      ref: values
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: media
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
