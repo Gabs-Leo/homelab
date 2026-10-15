@@ -8,7 +8,7 @@ spec:
 
   sources:
     - repoURL: https://oben01.github.io/charts
-      chart: oben01/homarr
+      chart: homarr
       targetRevision: "1.4.0"
       helm:
         releaseName: homarr
