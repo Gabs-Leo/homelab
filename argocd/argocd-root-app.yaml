@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/Gabs-Leo/homelab.git
     targetRevision: HEAD
-    ref: argocd/apps
+    path: argocd/apps
 
   destination:
     server: https://kubernetes.default.svc
