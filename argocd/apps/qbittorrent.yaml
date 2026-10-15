@@ -14,6 +14,11 @@ spec:
         releaseName: qbittorrent
         valueFiles:
           - $values/argocd/config/qbittorrent/values.yaml
+
+    - repoURL: https://github.com/Gabs-Leo/homelab.git
+      targetRevision: HEAD
+      path: argocd/config/qbittorrent/manifests
+
     - repoURL: https://github.com/Gabs-Leo/homelab.git
       targetRevision: HEAD
       ref: values
