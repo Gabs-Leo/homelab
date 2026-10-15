@@ -10,12 +10,15 @@ service:
 persistence:
   config:
     enabled: true
-    type: hostPath
-    hostPath: /srv/homelab/config/jellyfin
-    readOnly: false
+    existingClaim: "jellyfin-config-pvc"
+    accessMode: ReadWriteOnce
+    # type: hostPath
+    # hostPath: /srv/homelab/config/jellyfin
 
   media:
     enabled: true
-    type: hostPath
-    hostPath: /srv/homelab/data/media
+    existingClaim: "media-pvc"
+    accessMode: ReadWriteOnce
     readOnly: false
+    # type: hostPath
+    # hostPath: /srv/homelab/data/media
