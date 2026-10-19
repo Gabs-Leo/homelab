@@ -1,0 +1,3 @@
+# TODO check this parameter later
+preUpgradeChecker:
+  jobEnabled: false

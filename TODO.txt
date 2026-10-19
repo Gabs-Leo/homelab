@@ -2,3 +2,4 @@ Add ansible for future cluster nodes.
 [] install kubectl
 [] install k3s
 [] install helm
+[] install open-iscsi (for longhorn)

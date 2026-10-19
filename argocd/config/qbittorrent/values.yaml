@@ -1,7 +1,7 @@
 
 image:
   repository: lscr.io/linuxserver/qbittorrent
-  tag: "5.2.0"
+  tag: "5.2.4"
   pullPolicy: IfNotPresent
 
 env:
@@ -9,7 +9,6 @@ env:
   PGID: "1000"
   TZ: "Etc/UTC"
   WEBUI_PORT: "8080"
-  TORRENTING_PORT: "6881"
 
 service:
   enabled: false
@@ -23,12 +22,10 @@ service:
 #     - name: torrent-tcp
 #       port: 6881
 #       targetPort: 6881
-#       nodePort: 30881
 #       protocol: TCP
 #     - name: torrent-udp
 #       port: 6881
 #       targetPort: 6881
-#       nodePort: 30881
 #       protocol: UDP
 
 persistence:
