@@ -15,9 +15,9 @@ spec:
         valueFiles:
           - $values/argocd/config/longhorn/values.yaml
 
-    - repoURL: https://github.com/Gabs-Leo/homelab.git
-      targetRevision: HEAD
-      path: argocd/config/longhorn/manifests
+    # - repoURL: https://github.com/Gabs-Leo/homelab.git
+    #   targetRevision: HEAD
+    #   path: argocd/config/longhorn/manifests
 
     - repoURL: https://github.com/Gabs-Leo/homelab.git
       targetRevision: HEAD
