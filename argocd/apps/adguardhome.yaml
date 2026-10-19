@@ -12,19 +12,19 @@ spec:
       targetRevision: "v1.13.0"
       helm:
         releaseName: adguardhome
-        valueFiles:
-          - $values/argocd/config/adguardhome/values.yaml
+        # valueFiles:
+        #   - $values/argocd/config/adguardhome/values.yaml
 
     # - repoURL: https://github.com/Gabs-Leo/homelab.git
     #   targetRevision: HEAD
     #   path: argocd/config/longhorn/manifests
 
-    - repoURL: https://github.com/Gabs-Leo/homelab.git
-      targetRevision: HEAD
-      ref: values
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: adguardhome
+    # - repoURL: https://github.com/Gabs-Leo/homelab.git
+    #   targetRevision: HEAD
+    #   ref: values
+  # destination:
+  #   server: https://kubernetes.default.svc
+  #   namespace: adguardhome
 
   syncPolicy:
     automated:
