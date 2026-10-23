@@ -1,0 +1,5 @@
+apiVersion: v2
+name: metallb-config
+description: Configuration for MetalLB, a load-balancer implementation for bare metal Kubernetes clusters, using the Layer 2 mode.
+type: application
+version: 0.1.0

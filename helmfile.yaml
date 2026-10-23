@@ -1,0 +1,32 @@
+repositories:
+  - name: jellyfin
+    url: https://jellyfin.github.io/jellyfin-helm
+  - name: metallb
+    url: https://metallb.github.io/metallb
+
+releases:
+  - name: media-storage
+    labels:
+      job: media-storage
+    chart: ./helm/media-storage
+
+  - name: metallb
+    chart: metallb/metallb
+    namespace: metallb-system
+
+  - name: metallb-config
+    chart: ./helm/metallb-config
+    namespace: metallb-system
+    needs:
+      - metallb
+
+  # - name: jellyfin
+  #   labels:
+  #     job: jellyfin
+  #   chart: https://jellyfin.github.io/jellyfin-helm
+  #   # DB host, port, and connection opts for the environment
+  #   values:
+  #   - "config/jellyfin_values.yaml"
+  #   # DB username and password encrypted with helm-secrets (getsops/sops)
+  #   # secrets:
+  #   # - "deploy/environments/{{ env "RAILS_ENV" }}/secrets.yaml"

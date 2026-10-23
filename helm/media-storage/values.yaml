@@ -1,0 +1,10 @@
+namespace:
+  name: media
+  labels:
+    app: media-storage
+
+volume:
+  name: media
+  storage: 800Gi
+  accessMode: ReadWriteOnce
+  hostPath: /var/mnt/media

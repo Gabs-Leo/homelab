@@ -1,0 +1,6 @@
+apiVersion: v2
+name: media-storage
+description: Media dependency chart for homelab
+
+type: application
+version: 0.1.0

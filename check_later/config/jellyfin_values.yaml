@@ -1,0 +1,23 @@
+image:
+  repository: docker.io/jellyfin/jellyfin
+  pullPolicy: IfNotPresent
+
+service:
+  type: NodePort
+  port: 8096
+
+persistence:
+  config:
+    enabled: true
+    existingClaim: "jellyfin-config-pvc"
+    accessMode: ReadWriteOnce
+    # type: hostPath
+    # hostPath: /srv/homelab/config/jellyfin
+
+  media:
+    enabled: true
+    existingClaim: "media-pvc"
+    accessMode: ReadWriteOnce
+    readOnly: false
+    # type: hostPath
+    # hostPath: /srv/homelab/data/media
