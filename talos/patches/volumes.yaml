@@ -2,3 +2,8 @@ apiVersion: v1alpha1
 kind: UserVolumeConfig
 name: media
 volumeType: directory
+---
+apiVersion: v1alpha1
+kind: UserVolumeConfig
+name: config
+volumeType: directory

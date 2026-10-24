@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.name }}-home
+  namespace: adguard
+spec:
+  replicas: {{ .Values.deployment.replicas }}
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: {{ .Values.name }}-home
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.name }}-home
+    spec:
+      initContainers:
+        - name: copy-config
+          image: busybox
+          command:
+            - sh
+            - -c
+            - |
+              if [ ! -f /opt/adguardhome/conf/AdGuardHome.yaml ]; then
+                cp /tmp/AdGuardHome.yaml /opt/adguardhome/conf/AdGuardHome.yaml
+              fi
+          volumeMounts:
+            - name: config
+              mountPath: /opt/adguardhome/conf
+            - name: initial-config
+              mountPath: /tmp/AdGuardHome.yaml
+              subPath: AdGuardHome.yaml
+      containers:
+        - name: {{ .Values.name }}-home
+          image: {{ .Values.deployment.image }}
+          ports: {{ toYaml .Values.deployment.ports | nindent 12 }}
+          volumeMounts:
+            - name: config
+              mountPath: /opt/adguardhome/conf
+            - name: data
+              mountPath: /opt/adguardhome/work
+          resources: {{ toYaml .Values.deployment.resources | nindent 12 }}
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 5
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: {{ .Values.name }}-config-pvc
+        - name: data
+          persistentVolumeClaim:
+            claimName: {{ .Values.name }}-data-pvc
+        - name: initial-config
+          configMap:
+            name: {{ .Values.name }}-initial-config

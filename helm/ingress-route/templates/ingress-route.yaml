@@ -1,0 +1,9 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ .Values.name }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  entryPoints:
+    - web
+  routes: {{- toYaml .Values.routes | nindent 4 }}

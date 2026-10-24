@@ -3,13 +3,20 @@ repositories:
     url: https://jellyfin.github.io/jellyfin-helm
   - name: metallb
     url: https://metallb.github.io/metallb
+  - name: traefik
+    url: https://traefik.github.io/charts
+  - name: adguard-home
+    url: https://charts.gabe565.com
 
 releases:
+  # Media Storage
   - name: media-storage
-    labels:
-      job: media-storage
-    chart: ./helm/media-storage
+    chart: ./helm/pv-plus-pvc
+    namespace: media
+    values:
+    - "values/media-storage.yaml"
 
+  # MetalLB
   - name: metallb
     chart: metallb/metallb
     namespace: metallb-system
@@ -20,13 +27,53 @@ releases:
     needs:
       - metallb
 
+  # Traefik
+  - name: traefik
+    chart: traefik/traefik
+    namespace: traefik
+    values:
+    - "values/traefik.yaml"
+
+  # Jellyfin
+  - name: jellyfin-config
+    chart: ./helm/pv-plus-pvc
+    namespace: media
+    values:
+    - "values/jellyfin-config.yaml"
+    needs:
+      - media-storage
+
+  - name: jellyfin
+    chart: jellyfin/jellyfin
+    namespace: media
+    values:
+    - "values/jellyfin.yaml"
+    needs:
+      - jellyfin-config
+
+  - name: jellyfin-ingress-route
+    chart: ./helm/ingress-route
+    namespace: media
+    values:
+    - "values/jellyfin-ingress-route.yaml"
+    needs:
+      - jellyfin
+
+  # Adguard Home
+  # - name: adguard-home
+  #   chart: gabe565/adguard-home
+  #   namespace: adguard
+
+    # values:
+    # - "values/adguard-home.yaml"
+
   # - name: jellyfin
   #   labels:
   #     job: jellyfin
   #   chart: https://jellyfin.github.io/jellyfin-helm
-  #   # DB host, port, and connection opts for the environment
   #   values:
-  #   - "config/jellyfin_values.yaml"
-  #   # DB username and password encrypted with helm-secrets (getsops/sops)
-  #   # secrets:
-  #   # - "deploy/environments/{{ env "RAILS_ENV" }}/secrets.yaml"
+  #   - "values/jellyfin.yaml"
+    # DB host, port, and connection opts for the environment
+    # DB username and password encrypted with helm-secrets (getsops/sops)
+    # secrets:
+    # - "deploy/environments/{{ env "RAILS_ENV" }}/secrets.yaml"

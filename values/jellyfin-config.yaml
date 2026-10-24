@@ -1,0 +1,4 @@
+volume:
+  name: jellyfin-config
+  storage: 2Gi
+  hostPath: /var/mnt/config/jellyfin

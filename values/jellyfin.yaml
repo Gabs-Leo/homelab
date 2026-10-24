@@ -3,7 +3,6 @@ image:
   pullPolicy: IfNotPresent
 
 service:
-  type: NodePort
   port: 8096
 
 persistence:
@@ -11,13 +10,10 @@ persistence:
     enabled: true
     existingClaim: "jellyfin-config-pvc"
     accessMode: ReadWriteOnce
-    # type: hostPath
-    # hostPath: /srv/homelab/config/jellyfin
+    readOnly: false
 
   media:
     enabled: true
     existingClaim: "media-pvc"
     accessMode: ReadWriteOnce
     readOnly: false
-    # type: hostPath
-    # hostPath: /srv/homelab/data/media

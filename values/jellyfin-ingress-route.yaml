@@ -1,0 +1,7 @@
+name: jellyfin
+routes:
+  - match: Host(`jellyfin.home.arpa`)
+    kind: Rule
+    services:
+      - name: jellyfin
+        port: 8096

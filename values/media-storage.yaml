@@ -1,0 +1,4 @@
+volume:
+  name: media
+  storage: 800Gi
+  hostPath: /var/mnt/media
