@@ -9,12 +9,22 @@ repositories:
     url: https://charts.gabe565.com
 
 releases:
+  # Bootstrap
+  - name: bootstrap
+    chart: ./helm/bootstrap
+
+  # Folder Manager
+  - name: folder-manager
+    chart: ./helm/folder-manager
+    needs:
+      - bootstrap
+
   # Media Storage
   - name: media-storage
     chart: ./helm/pv-plus-pvc
     namespace: media
     values:
-    - "values/media-storage.yaml"
+      - "values/media-storage.yaml"
 
   # MetalLB
   - name: metallb
@@ -39,7 +49,7 @@ releases:
     chart: ./helm/pv-plus-pvc
     namespace: media
     values:
-    - "values/jellyfin-config.yaml"
+      - "values/jellyfin-config.yaml"
     needs:
       - media-storage
 
@@ -47,7 +57,7 @@ releases:
     chart: jellyfin/jellyfin
     namespace: media
     values:
-    - "values/jellyfin.yaml"
+      - "values/jellyfin.yaml"
     needs:
       - jellyfin-config
 
@@ -55,9 +65,24 @@ releases:
     chart: ./helm/ingress-route
     namespace: media
     values:
-    - "values/jellyfin-ingress-route.yaml"
+      - "values/jellyfin-ingress-route.yaml"
     needs:
       - jellyfin
+
+  #filebrowser
+  - name: filebrowser-config
+    chart: ./helm/pv-plus-pvc
+    namespace: media
+    values:
+      - "values/filebrowser-config.yaml"
+    needs:
+      - media-storage
+
+  - name: filebrowser
+    chart: ./helm/filebrowser-quantum
+    namespace: media
+    needs:
+      - filebrowser-config
 
   # Adguard Home
   # - name: adguard-home

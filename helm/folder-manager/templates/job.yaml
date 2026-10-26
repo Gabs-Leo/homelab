@@ -1,0 +1,39 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Release.Name }}-directories
+  namespace: bootstrap
+spec:
+  backoffLimit: 1
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: directory-creator
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: create-directories
+          image: {{ .Values.image.url }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command:
+            - /bin/sh
+            - -c
+            - |
+              set -eu
+              {{- range $dir := .Values.directories }}
+              {{- range $path := $dir.paths }}
+              mkdir -p {{ printf "%s/%s" $dir.mountPath $path | quote }}
+              {{- end }}
+              {{- end }}
+          volumeMounts:
+            {{- range $i, $dir := .Values.directories }}
+            - name: directory-volume-{{ $i }}
+              mountPath: {{ $dir.mountPath | quote }}
+            {{- end }}
+      volumes:
+        {{- range $i, $dir := .Values.directories }}
+        - name: directory-volume-{{ $i }}
+          hostPath:
+            path: {{ $dir.hostPath | quote }}
+            type: Directory
+        {{- end }}

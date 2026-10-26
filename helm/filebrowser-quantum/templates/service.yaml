@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.service.name }}
+spec:
+  selector:
+    app.kubernetes.io/name: {{ .Values.deployment.name }}
+  ports:
+    - protocol: TCP
+      port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.port }}
+
+---
+
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ .Values.service.name }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  entryPoints:
+    - web
+  routes: 
+    - match: Host(`{{ .Values.service.host }}`)
+      kind: Rule
+      services:
+        - name: {{ .Values.service.name }}
+          port: {{ .Values.service.port }}

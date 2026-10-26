@@ -1,0 +1,4 @@
+volume:
+  name: filebrowser-data
+  storage: 2Gi
+  hostPath: /var/mnt/config/filebrowser

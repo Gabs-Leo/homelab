@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.deployment.name }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/name: {{ .Values.deployment.name }}
+spec:
+  replicas: {{ .Values.deployment.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.deployment.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.deployment.name }}
+        app.kubernetes.io/name: {{ .Values.deployment.name }}
+    spec:
+      containers:
+      - name: {{ .Values.deployment.name }}
+        image: {{ .Values.deployment.image.repository }}
+        imagePullPolicy: {{ .Values.deployment.image.pullPolicy }}
+        ports:
+          - containerPort: {{ .Values.service.port }}
+        env:
+          - name: FILEBROWSER_CONFIG
+            value: /home/filebrowser/data/config.yaml
+        volumeMounts:
+          - name: config
+            mountPath: /home/filebrowser/data/config.yaml
+            subPath: config.yaml
+            readOnly: false
+          - name: data
+            mountPath: /home/filebrowser/data
+          - name: media
+            mountPath: /media
+            readOnly: false
+      volumes:
+        - name: config
+          configMap:
+            name: {{ .Release.Name }}-config
+        - name: data
+          persistentVolumeClaim:
+            claimName: {{ .Values.volumes.data.persistentVolumeClaim.claimName }}
+        - name: media
+          persistentVolumeClaim:
+            claimName: {{ .Values.volumes.media.persistentVolumeClaim.claimName }}

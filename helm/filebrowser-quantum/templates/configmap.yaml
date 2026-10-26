@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-config
+  namespace: {{ .Release.Namespace }}
+data:
+  config.yaml: |
+    server:
+      database:
+        path: /home/filebrowser/data/database.sqlite
+      cacheDir: /home/filebrowser/data/tmp
+      sources:
+{{- range .Values.filebrowser.sources }}
+        - name: {{ .name | quote }}
+          path: {{ .path | quote }}
+          config:
+            defaultEnabled: {{ .defaultEnabled }}
+{{- end }}
+    auth:
+      methods:
+        password:
+          enabled: true
+{{- if .Values.adminPassword }}
+          adminPassword: {{ .Values.filebrowser.adminPassword | quote }}
+{{- end }}

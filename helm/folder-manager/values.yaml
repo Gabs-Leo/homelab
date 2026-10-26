@@ -1,0 +1,22 @@
+image:
+  url: busybox:1.36
+  pullPolicy: IfNotPresent
+
+directories:
+  - name: media
+    hostPath: /var/mnt/media
+    mountPath: /mnt/media
+    paths:
+      - movies
+      - series
+      - anime
+      - documentaries
+      - music
+
+  - name: config
+    hostPath: /var/mnt/config
+    mountPath: /mnt/config
+    paths:
+      - adguard
+      - jellyfin
+      - filebrowser

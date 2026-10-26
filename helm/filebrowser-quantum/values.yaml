@@ -1,0 +1,26 @@
+deployment:
+  name: filebrowser-quantum
+  replicaCount: 1
+  image:
+    repository: ghcr.io/gtsteffaniak/filebrowser:stable
+    pullPolicy: IfNotPresent
+
+service:
+  name: filebrowser-quantum
+  port: 80
+  host: files.home.arpa
+
+volumes:
+  data:
+    persistentVolumeClaim:
+      claimName: filebrowser-data-pvc
+  media:
+    persistentVolumeClaim:
+      claimName: media-pvc
+
+filebrowser:
+  adminPassword: ""
+  sources:
+    - name: Media
+      path: /media
+      defaultEnabled: true
