@@ -1,33 +1,37 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.name }}-dns
+  name: {{ .Values.name }}
   namespace: adguard
+  labels:
+    app: {{ .Values.name }}
   annotations:
     metallb.universe.tf/loadBalancerIPs: {{ .Values.service.loadBalancerIP }}
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "3000"
 spec:
+  selector:
+    app: {{ .Values.name }}
+  ports: {{ toYaml .Values.service.ports | nindent 4 }}
   type: LoadBalancer
   externalTrafficPolicy: Local
-  selector:
-    app: {{ .Values.name }}-home
-  ports: {{ toYaml .Values.service.ports | nindent 4 }}
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: {{ .Values.name }}-web
-  namespace: adguard
-spec:
-  type: LoadBalancer
-  selector:
-    app: {{ .Values.name }}-home
-  ports:
-    - port: 80
-      targetPort: 3000
-      name: http
-    - port: 443
-      targetPort: 443
-      name: https
-    - port: 853
-      targetPort: 853
-      name: dns-tls
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: {{ .Values.name }}-web
+#   namespace: adguard
+# spec:
+#   type: LoadBalancer
+#   selector:
+#     app: {{ .Values.name }}
+#   ports:
+#     - port: 80
+#       targetPort: 3000
+#       name: http
+#     - port: 443
+#       targetPort: 443
+#       name: https
+#     - port: 853
+#       targetPort: 853
+#       name: dns-tls

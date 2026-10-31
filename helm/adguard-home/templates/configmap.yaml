@@ -3,40 +3,38 @@ kind: ConfigMap
 metadata:
   name: {{ .Values.name }}-initial-config
   namespace: adguard
+  labels:
+    app: {{ .Values.name }}
+    app.kubernetes.io/name: {{ .Values.name }}
 data:
   AdGuardHome.yaml: |
-    http:
-      pprof:
-        port: 6060
-        enabled: false
-      address: 0.0.0.0:3000
-      session_ttl: 720h
-    users:
-      - name: admin
-        password: "$2y$10$changethishashaftersetup"
+    bind_host: 0.0.0.0
+    bind_port: 3000
+    beta_bind_port: 0
+    users: []
+    language: "en"
+    theme: "auto"
     dns:
-      bind_hosts:
-        - 0.0.0.0
+      bind_host: 0.0.0.0
       port: 53
-      upstream_dns:
-        - https://cloudflare-dns.com/dns-query
-        - https://dns.google/dns-query
-        - 1.1.1.1
-        - 8.8.8.8
+      protection_enabled: true
+      filtering_enabled: true
+      safebrowsing_enabled: true
+      safesearch_enabled: true
+      querylog_enabled: true
+      ratelimit: 20
+      blocked_response_ttl: 10
       bootstrap_dns:
         - 1.1.1.1
         - 8.8.8.8
-      all_servers: false
-      cache_size: 4194304
-      cache_ttl_min: 300
-      cache_ttl_max: 86400
-    filtering:
+    tls:
+      enabled: false
+    log:
+      file: ""
+      max_backups: 0
+      max_size: 100
+      max_age: 3
+      compress: false
+      local_time: false
+    security:
       protection_enabled: true
-      filtering_enabled: true
-    filters:
-      - enabled: true
-        url: https://adguardteam.github.io/AdGuardSDNSFilter/Filters/filter.txt
-        name: AdGuard DNS filter
-      - enabled: true
-        url: https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
-        name: Steven Black Unified

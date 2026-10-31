@@ -85,12 +85,9 @@ releases:
       - filebrowser-config
 
   # Adguard Home
-  # - name: adguard-home
-  #   chart: gabe565/adguard-home
-  #   namespace: adguard
-
-    # values:
-    # - "values/adguard-home.yaml"
+  - name: adguard-home
+    chart: ./helm/adguard-home
+    namespace: adguard
 
   # - name: jellyfin
   #   labels:

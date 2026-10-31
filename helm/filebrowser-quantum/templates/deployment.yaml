@@ -16,6 +16,18 @@ spec:
         app: {{ .Values.deployment.name }}
         app.kubernetes.io/name: {{ .Values.deployment.name }}
     spec:
+      initContainers:
+        - name: prepare-data
+          image: busybox:1.36
+          command:
+            - sh
+            - -c
+            - mkdir -p /data/tmp && chown -R 1000:1000 /data
+          securityContext:
+            runAsUser: 0
+          volumeMounts:
+            - name: data
+              mountPath: /data
       containers:
       - name: {{ .Values.deployment.name }}
         image: {{ .Values.deployment.image.repository }}
@@ -25,6 +37,9 @@ spec:
         env:
           - name: FILEBROWSER_CONFIG
             value: /home/filebrowser/data/config.yaml
+        securityContext:
+          runAsUser: 0
+          runAsGroup: 0
         volumeMounts:
           - name: config
             mountPath: /home/filebrowser/data/config.yaml
